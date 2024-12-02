@@ -7,9 +7,9 @@ function App() {
 
   useEffect(() => {
     // Test connection to backend
-    fetch(`${config.API_URL}/health`)
-      .then(response => response.text())
-      .then(data => setStatus(data))
+    fetch(`${config.API_URL}/api/health`)
+      .then(response => response.json())
+      .then(data => setStatus(data.message))
       .catch(error => setStatus('Error connecting to backend'));
   }, []);
 

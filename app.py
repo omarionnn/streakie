@@ -222,10 +222,10 @@ def get_user_stats():
     })
 
 # Health check endpoint
-@app.route('/health')
+@app.route('/api/health')
 @cross_origin()
 def health_check():
-    return 'Backend is healthy!'
+    return jsonify({'status': 'healthy', 'message': 'Backend is running!'})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5005)
