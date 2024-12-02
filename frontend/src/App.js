@@ -1,22 +1,23 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import config from './config';
 
 function App() {
+  const [status, setStatus] = useState('Loading...');
+
+  useEffect(() => {
+    // Test connection to backend
+    fetch(`${config.API_URL}/health`)
+      .then(response => response.text())
+      .then(data => setStatus(data))
+      .catch(error => setStatus('Error connecting to backend'));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Streakie</h1>
+        <p>Backend Status: {status}</p>
       </header>
     </div>
   );
