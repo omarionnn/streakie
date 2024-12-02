@@ -25,7 +25,10 @@ jwt = JWTManager(app)
 
 # MongoDB Configuration
 try:
-    client = MongoClient(os.getenv('MONGODB_URI', 'mongodb://localhost:27017/'))
+    mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
+    logger.info(f"Attempting to connect to MongoDB with URI: {mongodb_uri.split('@')[0]}...")
+    
+    client = MongoClient(mongodb_uri)
     # Test the connection
     client.server_info()
     db = client['streakie']
@@ -34,6 +37,7 @@ try:
     logger.info("Successfully connected to MongoDB")
 except Exception as e:
     logger.error(f"Failed to connect to MongoDB: {str(e)}")
+    logger.error(f"MongoDB URI being used: {os.getenv('MONGODB_URI', 'mongodb://localhost:27017/').split('@')[0]}")
     raise
 
 @app.route('/api/register', methods=['POST'])
