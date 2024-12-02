@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from pymongo import MongoClient
 from datetime import datetime, timedelta
@@ -220,6 +220,12 @@ def get_user_stats():
         'highest_streak': user['highest_streak'],
         'current_streak': user['current_streak']
     })
+
+# Health check endpoint
+@app.route('/health')
+@cross_origin()
+def health_check():
+    return 'Backend is healthy!'
 
 if __name__ == '__main__':
     app.run(debug=True, port=5005)
